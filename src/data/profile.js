@@ -2,7 +2,7 @@ export const profile = {
   name: 'Gilang Setia Adi Saputra',
   nickname: 'gilanqsetia',
   photo: '/pp.jpeg', // kosongkan '' kalau belum punya foto
-  role: 'Web Developer',
+  role: 'software engineer',
   bio: 'Saya membangun aplikasi web yang rapi dan mudah digunakan. Saat ini fokus belajar JavaScript dan Vue.js.',
   email: 'gilangbenzema9@gmail.com',
   github: 'https://github.com/gilanqsetia',
