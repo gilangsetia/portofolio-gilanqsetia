@@ -1,0 +1,115 @@
+/* ===== 1. Variabel (design system) ===== */
+:root {
+  --bg: #ffffff;
+  --surface: #f4f7fb;
+  --text: #0b1b3a;
+  --text-muted: #5b6b86;
+  --primary: #1f4fd8;
+  --primary-dark: #1739a6;
+  --accent: #38bdf8;
+  --border: #e3e9f3;
+  --radius: 12px;
+  --shadow: 0 8px 24px rgba(15, 40, 100, 0.1);
+  --container: 1100px;
+}
+
+/* Dark mode: aktif kalau <html> punya data-theme="dark" */
+[data-theme='dark'] {
+  --bg: #0a1226;
+  --surface: #111c3a;
+  --text: #e6ecfa;
+  --text-muted: #93a3c4;
+  --primary: #4f8cff;
+  --primary-dark: #3b73e6;
+  --accent: #38bdf8;
+  --border: #1e2d52;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* ===== 2. Reset sederhana ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  transition: background 0.3s, color 0.3s;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ===== 3. Kelas umum (dipakai di semua komponen) ===== */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  border: 2px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+section[id] {
+  scroll-margin-top: 70px;
+}
