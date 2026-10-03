@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { profile } from '../data/profile.js'
 
 const links = [
@@ -28,6 +28,22 @@ const saved = localStorage.getItem('theme')
 const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 const isDark = ref(saved ? saved === 'dark' : systemDark)
 
+/* ===== Navbar berubah saat di-scroll ===== */
+const scrolled = ref(false)
+
+function onScroll() {
+  scrolled.value = window.scrollY > 20
+}
+
+onMounted(() => {
+  onScroll() // cek posisi saat pertama dimuat
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+})
+
 function toggleTheme() {
   isDark.value = !isDark.value
 }
@@ -46,7 +62,7 @@ watch(
 </script>
 
 <template>
-  <header class="navbar">
+  <header class="navbar" :class="{ scrolled }">
     <div class="container navbar-inner">
       <a href="#beranda" class="logo" @click="closeMenu">{{ profile.nickname }}</a>
 
@@ -87,8 +103,15 @@ watch(
   top: 0;
   z-index: 100;
   background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  transition: background 0.3s;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+}
+
+.navbar.scrolled {
+  background: color-mix(in srgb, var(--bg) 65%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-bottom-color: var(--border);
 }
 
 .navbar-inner {
