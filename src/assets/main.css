@@ -13,6 +13,23 @@
   --container: 1100px;
   --font-body: 'Plus Jakarta Sans', sans-serif;
   --font-heading: 'Sora', sans-serif;
+
+    /* Skala tipografi */
+  --fs-hero: clamp(2.2rem, 5vw, 3.6rem);
+  --fs-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --fs-h3: clamp(1.15rem, 2vw, 1.3rem);
+  --fs-h4: 1.05rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+
+  /* Jarak antar elemen (kelipatan 8px) */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
 }
 
 /* Dark mode: aktif kalau <html> punya data-theme="dark" */
@@ -43,15 +60,31 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
+  font-size: var(--fs-body);
   line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   transition: background 0.3s, color 0.3s;
 }
 
-h1, h2, h3, .logo {
+h1, h2, h3, h4, .logo {
   font-family: var(--font-heading);
+  line-height: 1.2;
   letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+h3 { font-size: var(--fs-h3); font-weight: 600; }
+h4 { font-size: var(--fs-h4); font-weight: 600; }
+
+p {
+  max-width: 65ch; /* baris tidak terlalu panjang, nyaman dibaca */
+}
+
+button, input, textarea {
+  font-family: inherit;
 }
 
 a {
@@ -76,18 +109,42 @@ ul {
 }
 
 .section {
-  padding: 5rem 0;
+  padding: var(--space-6) 0;
 }
 
 .section-title {
-  font-size: 2rem;
+  position: relative;
+  font-size: var(--fs-h2);
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-1);
+  padding-bottom: var(--space-2);
+}
+
+/* garis aksen kecil di bawah judul */
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
 }
 
 .section-subtitle {
+  font-size: var(--fs-body);
   color: var(--text-muted);
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-5);
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: var(--space-5) 0;
+  }
+  .section-subtitle {
+    margin-bottom: var(--space-4);
+  }
 }
 
 /* ===== Tombol ===== */

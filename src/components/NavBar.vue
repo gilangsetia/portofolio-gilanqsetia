@@ -4,10 +4,9 @@ import { profile } from '../data/profile.js'
 
 const links = [
   { label: 'Beranda', href: '#beranda' },
-  { label: 'Profil', href: '#profil' },
-  { label: 'Skill', href: '#skill' },
-  { label: 'Project', href: '#project' },
-  { label: 'Pengalaman', href: '#pengalaman' },
+  { label: 'Tentang', href: '#tentang' },
+  { label: 'Keahlian', href: '#skill' },
+  { label: 'Proyek', href: '#project' },
   { label: 'Kontak', href: '#kontak' },
 ]
 
@@ -136,6 +135,7 @@ watch(
   color: var(--text-muted);
   font-weight: 500;
   transition: color 0.2s;
+  font-size: 0.95rem;
 }
 
 .nav-links a:hover {
@@ -149,21 +149,21 @@ watch(
 }
 
 .icon-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
   background: var(--surface);
   color: var(--text);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, transform 0.2s;
 }
 
 .icon-btn:hover {
   border-color: var(--primary);
+  transform: translateY(-1px);
 }
-
 /* Tombol hamburger disembunyikan di desktop */
 .hamburger {
   display: none;

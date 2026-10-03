@@ -32,7 +32,6 @@ const initials = profile.name
         <div class="hero-actions">
           <a href="#project" class="btn">Lihat Project</a>
           <a href="/cv-gilang.pdf" download class="btn btn-outline">Unduh CV</a>
-          <a :href="`mailto:${profile.email}`" class="link-contact">Hubungi saya →</a>
         </div>
       </div>
 
@@ -57,7 +56,7 @@ const initials = profile.name
   display: flex;
   align-items: center;
   min-height: calc(100vh - 64px);
-  padding: 3rem 0;
+  padding: var(--space-4) 0;
   overflow: hidden;
 }
 
@@ -78,7 +77,7 @@ const initials = profile.name
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
-  gap: 4rem;
+  gap: var(--space-5);
   width: 100%;
 }
 
@@ -87,11 +86,11 @@ const initials = profile.name
   align-items: center;
   gap: 0.6rem;
   padding: 0.4rem 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-3);
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface);
-  font-size: 0.85rem;
+  font-size: var(--fs-small);
   font-weight: 500;
   color: var(--text-muted);
 }
@@ -105,13 +104,14 @@ const initials = profile.name
 }
 
 .hero-hello {
+  font-size: var(--fs-body);
   color: var(--primary);
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
 
 .hero-name {
-  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-size: var(--fs-hero);
   line-height: 1.1;
   font-weight: 800;
 }
@@ -124,33 +124,38 @@ const initials = profile.name
 }
 
 .hero-role {
-  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-size: var(--fs-h3);
   font-weight: 600;
   color: var(--text-muted);
-  margin: 0.75rem 0 1.25rem;
+  margin: 0.75rem 0 var(--space-2);
 }
 
 .hero-bio {
   max-width: 520px;
+  font-size: 1.05rem;
   color: var(--text-muted);
-  margin-bottom: 2.25rem;
+  margin-bottom: var(--space-4);
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-2);
 }
 
 .link-contact {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 0.75rem;
   color: var(--primary);
   font-weight: 600;
-  padding: 0.75rem 0.5rem;
+  transition: letter-spacing 0.2s;
 }
 
 .link-contact:hover {
-  text-decoration: underline;
+  letter-spacing: 0.03em;
 }
 
 /* ===== Foto ===== */
@@ -165,7 +170,6 @@ const initials = profile.name
   aspect-ratio: 4 / 5;
 }
 
-/* bingkai dekoratif di belakang foto */
 .frame::before {
   content: '';
   position: absolute;
@@ -199,16 +203,16 @@ const initials = profile.name
 @media (max-width: 860px) {
   .hero {
     min-height: auto;
-    padding: 2.5rem 0 4rem;
+    padding: var(--space-4) 0 var(--space-5);
   }
 
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: var(--space-4);
   }
 
   .hero-visual {
-    order: -1; /* foto tampil di atas */
+    order: -1;
   }
 
   .frame {
@@ -226,6 +230,10 @@ const initials = profile.name
 
   .hero-actions {
     justify-content: center;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 140px;
   }
 }
 </style>
