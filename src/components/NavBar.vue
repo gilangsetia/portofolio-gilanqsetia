@@ -1,13 +1,17 @@
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { profile } from '../data/profile.js'
+import { useLang } from '../i18n/useLang.js'
 
+const { locale, setLang } = useLang()
+
+// key = kunci terjemahan di src/i18n/index.js
 const links = [
-  { label: 'Beranda', href: '#beranda' },
-  { label: 'Tentang', href: '#tentang' },
-  { label: 'Keahlian', href: '#skill' },
-  { label: 'Proyek', href: '#project' },
-  { label: 'Kontak', href: '#kontak' },
+  { key: 'nav.home', href: '#beranda' },
+  { key: 'nav.about', href: '#tentang' },
+  { key: 'nav.skills', href: '#skill' },
+  { key: 'nav.projects', href: '#project' },
+  { key: 'nav.contact', href: '#kontak' },
 ]
 
 /* ===== Logo ===== */
@@ -25,26 +29,15 @@ function closeMenu() {
   menuOpen.value = false
 }
 
+/* ===== Bahasa ===== */
+function toggleLang() {
+  setLang(locale.value === 'id' ? 'en' : 'id')
+}
+
 /* ===== Dark mode ===== */
 const saved = localStorage.getItem('theme')
 const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 const isDark = ref(saved ? saved === 'dark' : systemDark)
-
-/* ===== Navbar berubah saat di-scroll ===== */
-const scrolled = ref(false)
-
-function onScroll() {
-  scrolled.value = window.scrollY > 20
-}
-
-onMounted(() => {
-  onScroll()
-  window.addEventListener('scroll', onScroll, { passive: true })
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll)
-})
 
 function toggleTheme() {
   isDark.value = !isDark.value
@@ -59,12 +52,30 @@ watch(
   },
   { immediate: true },
 )
+
+/* ===== Navbar berubah saat di-scroll ===== */
+const scrolled = ref(false)
+
+function onScroll() {
+  scrolled.value = window.scrollY > 20
+}
+
+onMounted(() => {
+  // sinkronkan atribut lang pada <html> dengan bahasa yang aktif
+  document.documentElement.lang = locale.value
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+})
 </script>
 
 <template>
   <header class="navbar" :class="{ scrolled }">
     <div class="container navbar-inner">
-      <a href="#beranda" class="logo" aria-label="Kembali ke beranda" @click="closeMenu">
+      <a href="#beranda" class="logo" :aria-label="$t('nav.backHome')" @click="closeMenu">
         <img
           v-if="profile.logo && !logoError"
           :src="isDark && profile.logoDark ? profile.logoDark : profile.logo"
@@ -78,15 +89,24 @@ watch(
       <nav class="nav-wrap" :class="{ open: menuOpen }">
         <ul class="nav-links">
           <li v-for="link in links" :key="link.href">
-            <a :href="link.href" @click="closeMenu">{{ link.label }}</a>
+            <a :href="link.href" @click="closeMenu">{{ $t(link.key) }}</a>
           </li>
         </ul>
       </nav>
 
       <div class="nav-actions">
         <button
+          class="icon-btn lang-btn"
+          :aria-label="$t('nav.switchLang')"
+          :title="$t('nav.switchLang')"
+          @click="toggleLang"
+        >
+          {{ locale === 'id' ? 'EN' : 'ID' }}
+        </button>
+
+        <button
           class="icon-btn"
-          :aria-label="isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'"
+          :aria-label="isDark ? $t('nav.lightMode') : $t('nav.darkMode')"
           @click="toggleTheme"
         >
           <span v-if="isDark">☀️</span>
@@ -95,7 +115,7 @@ watch(
 
         <button
           class="icon-btn hamburger"
-          aria-label="Buka menu"
+          :aria-label="menuOpen ? $t('nav.closeMenu') : $t('nav.openMenu')"
           @click="toggleMenu"
         >
           <span v-if="menuOpen">✕</span>
@@ -148,6 +168,7 @@ watch(
   object-fit: contain;
 }
 
+/* ===== Menu ===== */
 .nav-links {
   display: flex;
   gap: 1.75rem;
@@ -177,6 +198,7 @@ watch(
   border: 1.5px solid var(--border);
   background: var(--surface);
   color: var(--text);
+  font-family: inherit;
   font-size: 1.05rem;
   cursor: pointer;
   transition: border-color 0.2s, transform 0.2s;
@@ -185,6 +207,12 @@ watch(
 .icon-btn:hover {
   border-color: var(--primary);
   transform: translateY(-1px);
+}
+
+.lang-btn {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 /* Tombol hamburger disembunyikan di desktop */

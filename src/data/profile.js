@@ -18,5 +18,5 @@ export const profile = {
   instagram: 'https://instagram.com/gilanqsetia',
   website: 'https://portofolio-gilanqsetia.vercel.app',
   photo: '/pp.jpeg',
-  logo: '/logo.png',
+  logo: '/c2.png',
 }

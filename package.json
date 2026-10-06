@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
-    "vue": "^3.5.42"
+    "vue": "^3.5.42",
+    "vue-i18n": "^11.4.13"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.8",
