@@ -10,6 +10,10 @@ const links = [
   { label: 'Kontak', href: '#kontak' },
 ]
 
+/* ===== Logo ===== */
+// true kalau gambar gagal dimuat, lalu teks nickname dipakai sebagai cadangan
+const logoError = ref(false)
+
 /* ===== Menu hamburger ===== */
 const menuOpen = ref(false)
 
@@ -22,7 +26,6 @@ function closeMenu() {
 }
 
 /* ===== Dark mode ===== */
-// Baca pilihan tersimpan. Kalau belum ada, ikuti pengaturan sistem
 const saved = localStorage.getItem('theme')
 const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 const isDark = ref(saved ? saved === 'dark' : systemDark)
@@ -35,7 +38,7 @@ function onScroll() {
 }
 
 onMounted(() => {
-  onScroll() // cek posisi saat pertama dimuat
+  onScroll()
   window.addEventListener('scroll', onScroll, { passive: true })
 })
 
@@ -47,8 +50,6 @@ function toggleTheme() {
   isDark.value = !isDark.value
 }
 
-// watch: dijalankan setiap kali isDark berubah
-// immediate: true -> juga dijalankan sekali saat halaman pertama dimuat
 watch(
   isDark,
   (nilai) => {
@@ -63,7 +64,16 @@ watch(
 <template>
   <header class="navbar" :class="{ scrolled }">
     <div class="container navbar-inner">
-      <a href="#beranda" class="logo" @click="closeMenu">{{ profile.nickname }}</a>
+      <a href="#beranda" class="logo" aria-label="Kembali ke beranda" @click="closeMenu">
+        <img
+          v-if="profile.logo && !logoError"
+          :src="isDark && profile.logoDark ? profile.logoDark : profile.logo"
+          :alt="`Logo ${profile.nickname}`"
+          class="logo-img"
+          @error="logoError = true"
+        />
+        <span v-else>{{ profile.nickname }}</span>
+      </a>
 
       <nav class="nav-wrap" :class="{ open: menuOpen }">
         <ul class="nav-links">
@@ -117,13 +127,25 @@ watch(
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 64px;
+  height: 72px;
 }
 
+/* ===== Logo ===== */
 .logo {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-heading);
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--primary);
+}
+
+.logo-img {
+  display: block;
+  height: 48px; /* ubah angka ini untuk memperbesar/memperkecil logo */
+  width: auto;
+  max-width: none;
+  object-fit: contain;
 }
 
 .nav-links {
@@ -134,8 +156,8 @@ watch(
 .nav-links a {
   color: var(--text-muted);
   font-weight: 500;
-  transition: color 0.2s;
   font-size: 0.95rem;
+  transition: color 0.2s;
 }
 
 .nav-links a:hover {
@@ -164,6 +186,7 @@ watch(
   border-color: var(--primary);
   transform: translateY(-1px);
 }
+
 /* Tombol hamburger disembunyikan di desktop */
 .hamburger {
   display: none;
@@ -175,9 +198,13 @@ watch(
     display: block;
   }
 
+  .logo-img {
+    height: 40px;
+  }
+
   .nav-wrap {
     position: absolute;
-    top: 64px;
+    top: 72px;
     left: 0;
     right: 0;
     background: var(--bg);

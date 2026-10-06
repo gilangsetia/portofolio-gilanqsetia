@@ -14,7 +14,7 @@ const info = [
   <section id="tentang" class="section">
     <div class="container">
       <h2 class="section-title">Tentang Saya</h2>
-      <p class="section-subtitle">Siapa saya dan perjalanan yang sudah saya tempuh</p>
+      <p class="section-subtitle">Latar belakang, pengalaman, dan pendidikan saya</p>
 
       <div class="about-grid">
         <!-- Kolom kiri: profil -->
@@ -37,7 +37,7 @@ const info = [
 
         <!-- Kolom kanan: perjalanan -->
         <div class="about-col">
-          <h3 class="col-title">Pengalaman Profesional</h3>
+          <h3 class="col-title">Pengalaman & Pendidikan</h3>
 
           <ol v-if="experience.length > 0" class="timeline">
             <li v-for="item in experience" :key="item.id" class="timeline-item">

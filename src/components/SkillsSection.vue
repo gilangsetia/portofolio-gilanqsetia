@@ -39,7 +39,7 @@ function onIconError(id) {
   <section id="skill" class="section skills">
     <div class="container">
       <h2 class="section-title">Keahlian</h2>
-      <p class="section-subtitle">Teknologi yang saya gunakan</p>
+      <p class="section-subtitle">Teknologi dan alat yang saya pakai dalam proyek nyata</p>
 
       <div class="filters">
         <button

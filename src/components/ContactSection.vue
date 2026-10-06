@@ -95,15 +95,14 @@ async function kirim() {
   <section id="kontak" class="section contact">
     <div class="container">
       <h2 class="section-title">Kontak</h2>
-      <p class="section-subtitle">Tertarik bekerja sama? Hubungi saya.</p>
+      <p class="section-subtitle">Punya pertanyaan, peluang kerja, atau ide proyek? Saya senang mendengarnya.</p>
 
       <div class="contact-grid">
         <!-- Kolom kiri: info kontak -->
         <div class="contact-info">
           <h3 class="col-title">Mari terhubung</h3>
           <p class="col-text">
-            Saya terbuka untuk pekerjaan, project freelance, maupun sekadar diskusi.
-            Pilih cara yang paling nyaman untukmu.
+            Saya terbuka untuk peluang kerja, proyek freelance, dan diskusi seputar pengembangan perangkat lunak. Pilih cara yang paling nyaman, biasanya saya membalas dalam 1-2 hari.
           </p>
 
           <ul class="contact-list">
@@ -155,7 +154,7 @@ async function kirim() {
 
           <p v-if="error" class="notice error">{{ error }}</p>
           <p v-if="sukses" class="notice success">
-            Pesan terkirim. Terima kasih, saya akan segera membalas!
+            Terima kasih, pesanmu sudah terkirim. Saya akan segera membalasnya.
           </p>
 
           <button type="submit" class="btn" :disabled="loading">

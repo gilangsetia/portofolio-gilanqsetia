@@ -20,7 +20,7 @@ function countOf(type) {
   <section id="project" class="section">
     <div class="container">
       <h2 class="section-title">Proyek</h2>
-      <p class="section-subtitle">Karya yang sudah saya buat</p>
+      <p class="section-subtitle">Sebagian proyek yang pernah saya kerjakan, dari sistem sekolah hingga marketplace</p>
 
       <template v-if="projects.length > 0">
         <div class="filters">

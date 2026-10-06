@@ -1,20 +1,22 @@
 export const profile = {
   name: 'Gilang Setia Adi Saputra',
   nickname: 'gilanqsetia',
-  photo: '/profile.jpeg', 
-  logo: '/pp.jpeg', 
-  role: 'software engineer',
-  bio: 'Saya membangun aplikasi web dan mobile yang berangkat dari kebutuhan pengguna, proses bisnis, dan implementasi yang terukur.',
-  email: 'gilangbenzema9@gmail.com',
-  github: 'https://github.com/gilanqsetia',
-  website: 'https://gilanqsetia.vercel.app', 
-  linkedin: 'https://www.linkedin.com/in/USERNAME-KAMU/',
-  instagram: 'https://instagram.com/gilanqsetia',
-  whatsapp: '6282257040387', 
-  location: 'Banyuwangi, Jawa Timur',
+  role: 'Software Developer',
+  bio: 'Saya mengembangkan aplikasi web dan mobile yang rapi, andal, dan mudah digunakan, dengan pengalaman di PHP, CodeIgniter 4, Laravel, dan MySQL. Fokus saya membangun sistem yang menjawab kebutuhan pengguna dan bisnis.',
   status: 'Terbuka untuk kerja dan freelance',
+  location: 'Jawa Timur, Indonesia',
+
   about: [
-    'Tulis paragraf pertama: siapa kamu dan apa yang kamu kerjakan.',
-    'Tulis paragraf kedua: apa yang sedang kamu pelajari dan target ke depan.',
-  ],
+    'Saya lulusan D4 Teknologi Rekayasa Perangkat Lunak Politeknik Negeri Banyuwangi (IPK 3,71) dengan sekitar satu tahun pengalaman mengembangkan aplikasi web dan mobile, baik lewat magang, pekerjaan di startup, maupun proyek akademik.',
+    'Saya terbiasa mengerjakan sistem informasi dan aplikasi marketplace, mulai dari menganalisis kebutuhan, merancang basis data, membangun fitur, hingga menguji dan memperbaiki bug. Bersama tim, saya bekerja dengan Git, GitHub, dan metode Agile.',
+    'Saya tertarik pada pengembangan fullstack, analisis dan perancangan sistem, serta teknologi frontend modern. Saya terbuka untuk peluang kerja maupun proyek freelance.'  ],
+
+  email: 'gilangbenzema9@gmail.com',
+  whatsapp: '6282257040387',
+  github: 'https://github.com/gilangsetia',
+  linkedin: 'https://www.linkedin.com/in/gilang-setia-adi-saputra-10b578347/', // isi alamat LinkedIn-mu
+  instagram: 'https://instagram.com/gilanqsetia',
+  website: 'https://portofolio-gilanqsetia.vercel.app',
+  photo: '/pp.jpeg',
+  logo: '/logo.png',
 }
