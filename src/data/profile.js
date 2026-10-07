@@ -3,7 +3,7 @@ export const profile = {
   nickname: 'gilanqsetia',
 
   role: {
-    id: 'Software Developer',
+    id: 'pengembang perangkat lunak',
     en: 'Software Developer',
   },
 
