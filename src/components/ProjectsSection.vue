@@ -3,15 +3,15 @@ import { ref, computed } from 'vue'
 import { projects, projectTypes } from '../data/projects.js'
 import ProjectCard from './ProjectCard.vue'
 
-const activeType = ref('Semua')
+const activeType = ref('all')
 
 const filteredProjects = computed(() => {
-  if (activeType.value === 'Semua') return projects
+  if (activeType.value === 'all') return projects
   return projects.filter((p) => p.type === activeType.value)
 })
 
 function countOf(type) {
-  if (type === 'Semua') return projects.length
+  if (type === 'all') return projects.length
   return projects.filter((p) => p.type === type).length
 }
 </script>
@@ -19,8 +19,8 @@ function countOf(type) {
 <template>
   <section id="project" class="section">
     <div class="container">
-      <h2 class="section-title">Proyek</h2>
-      <p class="section-subtitle">Sebagian proyek yang pernah saya kerjakan, dari sistem sekolah hingga marketplace</p>
+      <h2 class="section-title">{{ $t('projects.title') }}</h2>
+      <p class="section-subtitle">{{ $t('projects.subtitle') }}</p>
 
       <template v-if="projects.length > 0">
         <div class="filters">
@@ -31,7 +31,7 @@ function countOf(type) {
             :class="{ active: activeType === type }"
             @click="activeType = type"
           >
-            {{ type }}
+            {{ $t('projects.types.' + type) }}
             <span class="count">{{ countOf(type) }}</span>
           </button>
         </div>
@@ -45,7 +45,7 @@ function countOf(type) {
         </TransitionGroup>
       </template>
 
-      <p v-else class="empty">Belum ada project yang ditampilkan.</p>
+      <p v-else class="empty">{{ $t('projects.empty') }}</p>
     </div>
   </section>
 </template>

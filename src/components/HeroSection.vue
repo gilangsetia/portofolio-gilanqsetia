@@ -1,5 +1,8 @@
 <script setup>
 import { profile } from '../data/profile.js'
+import { useLang } from '../i18n/useLang.js'
+
+const { tx } = useLang()
 
 const [firstName, ...rest] = profile.name.split(' ')
 const restName = rest.join(' ')
@@ -19,19 +22,21 @@ const initials = profile.name
       <div class="hero-text">
         <p v-if="profile.status" class="status">
           <span class="status-dot"></span>
-          {{ profile.status }}
+          {{ tx(profile.status) }}
         </p>
 
-        <p class="hero-hello">Halo, saya</p>
+        <p class="hero-hello">{{ $t('hero.hello') }}</p>
         <h1 class="hero-name">
           <span class="grad">{{ firstName }}</span> {{ restName }}
         </h1>
-        <h2 class="hero-role">{{ profile.role }}</h2>
-        <p class="hero-bio">{{ profile.bio }}</p>
+        <h2 class="hero-role">{{ tx(profile.role) }}</h2>
+        <p class="hero-bio">{{ tx(profile.bio) }}</p>
 
         <div class="hero-actions">
-          <a href="#project" class="btn">Lihat Project</a>
-          <a href="/cv-gilang.pdf" download class="btn btn-outline">Unduh CV</a>
+          <a href="#project" class="btn">{{ $t('hero.viewProjects') }}</a>
+          <a href="/cv-gilang.pdf" download class="btn btn-outline">
+            {{ $t('hero.downloadCv') }}
+          </a>
         </div>
       </div>
 
@@ -40,7 +45,7 @@ const initials = profile.name
           <img
             v-if="profile.photo"
             :src="profile.photo"
-            :alt="`Foto ${profile.name}`"
+            :alt="profile.name"
             class="photo"
           />
           <div v-else class="photo initials">{{ initials }}</div>
@@ -55,7 +60,7 @@ const initials = profile.name
   position: relative;
   display: flex;
   align-items: center;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 72px);
   padding: var(--space-4) 0;
   overflow: hidden;
 }
@@ -142,20 +147,6 @@ const initials = profile.name
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
-}
-
-.link-contact {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  padding: 0 0.75rem;
-  color: var(--primary);
-  font-weight: 600;
-  transition: letter-spacing 0.2s;
-}
-
-.link-contact:hover {
-  letter-spacing: 0.03em;
 }
 
 /* ===== Foto ===== */

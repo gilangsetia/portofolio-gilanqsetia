@@ -1,30 +1,33 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { skills, categories } from '../data/skill.js'
+import { skills, categories, levelNumber } from '../data/skill.js'
+import { useLang } from '../i18n/useLang.js'
 
-const activeCategory = ref('Semua')
+const { tx } = useLang()
 
-// Mengubah label teks menjadi jumlah segmen yang menyala
-const levelNumber = {
-  Pemula: 1,
-  Menengah: 2,
-  Mahir: 3,
-}
+const activeCategory = ref('all')
 
 const filteredSkills = computed(() => {
-  if (activeCategory.value === 'Semua') return skills
+  if (activeCategory.value === 'all') return skills
   return skills.filter((skill) => skill.category === activeCategory.value)
 })
 
 // Jumlah skill per kategori, untuk ditampilkan di tombol filter
-function countOf(cat) {
-  if (cat === 'Semua') return skills.length
-  return skills.filter((skill) => skill.category === cat).length
+function countOf(key) {
+  if (key === 'all') return skills.length
+  return skills.filter((skill) => skill.category === key).length
 }
 
-// Alamat logo dari CDN Devicon
+// Nama kategori sesuai bahasa (dari kode kategori)
+function categoryLabel(key) {
+  const cat = categories.find((c) => c.key === key)
+  return cat ? tx(cat.label) : key
+}
+
+// Alamat logo dari CDN Devicon (ekstensi .svg ditambahkan jika belum ada)
 function iconUrl(path) {
-  return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${path}.svg`
+  const file = path.endsWith('.svg') ? path : `${path}.svg`
+  return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${file}`
 }
 
 // Menyimpan id skill yang logonya gagal dimuat, supaya kembali ke inisial
@@ -38,19 +41,19 @@ function onIconError(id) {
 <template>
   <section id="skill" class="section skills">
     <div class="container">
-      <h2 class="section-title">Keahlian</h2>
-      <p class="section-subtitle">Teknologi dan alat yang saya pakai dalam proyek nyata</p>
+      <h2 class="section-title">{{ $t('skills.title') }}</h2>
+      <p class="section-subtitle">{{ $t('skills.subtitle') }}</p>
 
       <div class="filters">
         <button
           v-for="cat in categories"
-          :key="cat"
+          :key="cat.key"
           class="filter-btn"
-          :class="{ active: activeCategory === cat }"
-          @click="activeCategory = cat"
+          :class="{ active: activeCategory === cat.key }"
+          @click="activeCategory = cat.key"
         >
-          {{ cat }}
-          <span class="count">{{ countOf(cat) }}</span>
+          {{ tx(cat.label) }}
+          <span class="count">{{ countOf(cat.key) }}</span>
         </button>
       </div>
 
@@ -70,12 +73,12 @@ function onIconError(id) {
             </span>
             <div class="skill-meta">
               <h3 class="skill-name">{{ skill.name }}</h3>
-              <span class="skill-cat">{{ skill.category }}</span>
+              <span class="skill-cat">{{ categoryLabel(skill.category) }}</span>
             </div>
           </div>
 
           <div class="skill-bottom">
-            <div class="segments" :aria-label="`Level ${skill.level}`">
+            <div class="segments" :aria-label="$t('skills.levels.' + skill.level)">
               <span
                 v-for="n in 3"
                 :key="n"
@@ -83,7 +86,7 @@ function onIconError(id) {
                 :class="{ filled: n <= levelNumber[skill.level] }"
               ></span>
             </div>
-            <span class="skill-level">{{ skill.level }}</span>
+            <span class="skill-level">{{ $t('skills.levels.' + skill.level) }}</span>
           </div>
         </div>
       </TransitionGroup>
@@ -91,15 +94,15 @@ function onIconError(id) {
       <div class="legend">
         <span class="legend-item">
           <span class="segments small"><span class="segment filled"></span><span class="segment filled"></span><span class="segment filled"></span></span>
-          Mahir
+          {{ $t('skills.levels.advanced') }}
         </span>
         <span class="legend-item">
           <span class="segments small"><span class="segment filled"></span><span class="segment filled"></span><span class="segment"></span></span>
-          Menengah
+          {{ $t('skills.levels.intermediate') }}
         </span>
         <span class="legend-item">
           <span class="segments small"><span class="segment filled"></span><span class="segment"></span><span class="segment"></span></span>
-          Pemula
+          {{ $t('skills.levels.beginner') }}
         </span>
       </div>
     </div>

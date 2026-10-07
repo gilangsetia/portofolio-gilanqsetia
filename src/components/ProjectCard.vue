@@ -1,5 +1,7 @@
 <script setup>
-import { computed, ref, onMounted, nextTick } from 'vue'
+import { computed, ref, onMounted, onUnmounted, nextTick, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useLang } from '../i18n/useLang.js'
 
 const props = defineProps({
   project: {
@@ -8,10 +10,16 @@ const props = defineProps({
   },
 })
 
+const { t } = useI18n()
+const { tx, locale } = useLang()
+
 // Label tombol demo menyesuaikan jenis project
 const demoLabel = computed(() =>
-  props.project.type === 'Website' ? 'Lihat Demo' : 'Coba Aplikasi',
+  props.project.type === 'website' ? t('projects.viewDemo') : t('projects.tryApp'),
 )
+
+// Tautan kode: mendukung field `repo` maupun `github`
+const repoUrl = computed(() => props.project.repo || props.project.github || '')
 
 /* ===== Deskripsi: Selengkapnya / Tutup ===== */
 const expanded = ref(false)
@@ -31,6 +39,16 @@ onMounted(() => {
   checkOverflow()
   window.addEventListener('resize', checkOverflow)
 })
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkOverflow)
+})
+
+// Saat bahasa berganti, panjang teks berubah: tutup dan cek ulang
+watch(locale, () => {
+  expanded.value = false
+  checkOverflow()
+})
 </script>
 
 <template>
@@ -39,13 +57,13 @@ onMounted(() => {
       <img
         v-if="project.image"
         :src="project.image"
-        :alt="`Tampilan ${project.title}`"
+        :alt="project.title"
         class="card-img"
         loading="lazy"
       />
       <div v-else class="card-img placeholder">{{ project.title[0] }}</div>
 
-      <span class="type-badge">{{ project.type }}</span>
+      <span class="type-badge">{{ $t('projects.types.' + project.type) }}</span>
     </div>
 
     <div class="card-body">
@@ -53,7 +71,7 @@ onMounted(() => {
 
       <div class="desc-wrap">
         <p ref="descEl" class="card-desc" :class="{ open: expanded }">
-          {{ project.description }}
+          {{ tx(project.description) }}
         </p>
         <button
           v-if="needsToggle || expanded"
@@ -61,15 +79,15 @@ onMounted(() => {
           class="more-btn"
           @click="expanded = !expanded"
         >
-          {{ expanded ? 'Tutup' : 'Selengkapnya' }}
+          {{ expanded ? $t('projects.less') : $t('projects.more') }}
         </button>
       </div>
 
       <ul class="tags">
-        <li v-for="t in project.tech" :key="t" class="tag">{{ t }}</li>
+        <li v-for="tech in project.tech" :key="tech" class="tag">{{ tech }}</li>
       </ul>
 
-      <div v-if="project.demo || project.github" class="card-actions">
+      <div v-if="project.demo || repoUrl" class="card-actions">
         <a
           v-if="project.demo"
           :href="project.demo"
@@ -80,8 +98,8 @@ onMounted(() => {
           {{ demoLabel }} ↗
         </a>
         <a
-          v-if="project.github"
-          :href="project.github"
+          v-if="repoUrl"
+          :href="repoUrl"
           target="_blank"
           rel="noopener"
           class="btn btn-sm btn-outline"

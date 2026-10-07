@@ -1,29 +1,37 @@
 <script setup>
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { profile } from '../data/profile.js'
 import { experience } from '../data/experience.js'
+import { useLang } from '../i18n/useLang.js'
 
-const info = [
-  { label: 'Nama', value: profile.name },
-  { label: 'Lokasi', value: profile.location },
-  { label: 'Email', value: profile.email },
-  { label: 'Status', value: profile.status },
-].filter((item) => item.value) // buang yang kosong
+const { t } = useI18n()
+const { tx } = useLang()
+
+const info = computed(() =>
+  [
+    { label: t('about.name'), value: profile.name },
+    { label: t('about.location'), value: tx(profile.location) },
+    { label: t('about.email'), value: profile.email },
+    { label: t('about.status'), value: tx(profile.status) },
+  ].filter((item) => item.value),
+)
 </script>
 
 <template>
   <section id="tentang" class="section">
     <div class="container">
-      <h2 class="section-title">Tentang Saya</h2>
-      <p class="section-subtitle">Latar belakang, pengalaman, dan pendidikan saya</p>
+      <h2 class="section-title">{{ $t('about.title') }}</h2>
+      <p class="section-subtitle">{{ $t('about.subtitle') }}</p>
 
       <div class="about-grid">
         <!-- Kolom kiri: profil -->
         <div class="about-col">
-          <h3 class="col-title">Profil</h3>
+          <h3 class="col-title">{{ $t('about.profile') }}</h3>
 
           <div class="about-text">
             <p v-for="(paragraf, index) in profile.about" :key="index">
-              {{ paragraf }}
+              {{ tx(paragraf) }}
             </p>
           </div>
 
@@ -37,19 +45,19 @@ const info = [
 
         <!-- Kolom kanan: perjalanan -->
         <div class="about-col">
-          <h3 class="col-title">Pengalaman & Pendidikan</h3>
+          <h3 class="col-title">{{ $t('about.experience') }}</h3>
 
           <ol v-if="experience.length > 0" class="timeline">
             <li v-for="item in experience" :key="item.id" class="timeline-item">
               <span class="dot"></span>
-              <span class="period">{{ item.period }}</span>
-              <h4 class="exp-title">{{ item.title }}</h4>
-              <p class="exp-place">{{ item.place }}</p>
-              <p class="exp-desc">{{ item.description }}</p>
+              <span class="period">{{ tx(item.period) }}</span>
+              <h4 class="exp-title">{{ tx(item.title) }}</h4>
+              <p class="exp-place">{{ tx(item.place) }}</p>
+              <p class="exp-desc">{{ tx(item.description) }}</p>
             </li>
           </ol>
 
-          <p v-else class="empty">Belum ada pengalaman yang ditampilkan.</p>
+          <p v-else class="empty">{{ $t('about.empty') }}</p>
         </div>
       </div>
     </div>

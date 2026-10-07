@@ -34,7 +34,7 @@ const socials = [
           class="footer-logo"
         />
         <p class="footer-copy">
-          © {{ year }} {{ profile.name }}. Dibuat dengan Vue.js.
+          © {{ year }} {{ profile.name }}. {{ $t('footer.madeWith') }}
         </p>
       </div>
 
