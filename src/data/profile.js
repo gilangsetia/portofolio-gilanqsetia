@@ -43,7 +43,7 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/gilang-setia-adi-saputra-10b578347/',
   instagram: 'https://instagram.com/gilanqsetia',
   website: 'https://portofolio-gilanqsetia.vercel.app',
-  photo: '/pp.jpeg',
+  photo: '/profile1.jpeg',
   logo: '/c2.png',
   logoDark: '',
 }

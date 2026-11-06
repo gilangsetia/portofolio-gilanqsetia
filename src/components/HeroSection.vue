@@ -174,7 +174,7 @@ const initials = profile.name
 .photo {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 103%;
   object-fit: cover;
   border-radius: 28px;
   box-shadow: var(--shadow);
